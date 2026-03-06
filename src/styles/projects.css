@@ -1,0 +1,552 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fragment+Mono:ital@0;1&family=Onest:wght@300;400;600&display=swap');
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOKENS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root {
+    --void: #060608;
+    --abyss: #09090e;
+    --surface: #0e0d14;
+
+    --coral: #ff3d5a;
+    --coral-dim: rgba(255, 61, 90, 0.15);
+    --coral-border: rgba(255, 61, 90, 0.3);
+
+    --violet: #9b5cff;
+    --violet-dim: rgba(155, 92, 255, 0.12);
+    --violet-border: rgba(155, 92, 255, 0.28);
+
+    --acid: #e8ff47;
+    /* highlight pop */
+    --ghost: rgba(255, 255, 255, 0.04);
+    --ghost-border: rgba(255, 255, 255, 0.06);
+    --text: #ede9ff;
+    --muted: rgba(200, 192, 255, 0.38);
+
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-mono: 'Fragment Mono', monospace;
+    --font-body: 'Onest', sans-serif;
+
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   KEYFRAMES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* Scanline crawl */
+@keyframes scanline {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(100vh);
+    }
+}
+
+/* Grid noise flicker */
+@keyframes flicker {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    92% {
+        opacity: 1;
+    }
+
+    93% {
+        opacity: 0.6;
+    }
+
+    94% {
+        opacity: 1;
+    }
+
+    97% {
+        opacity: 0.8;
+    }
+
+    98% {
+        opacity: 1;
+    }
+}
+
+/* Heading glitch */
+@keyframes glitch-shift {
+
+    0%,
+    100% {
+        clip-path: inset(0 0 100% 0);
+        transform: translate(0);
+    }
+
+    10% {
+        clip-path: inset(10% 0 80% 0);
+        transform: translate(-4px, 2px);
+    }
+
+    20% {
+        clip-path: inset(60% 0 10% 0);
+        transform: translate(4px, -2px);
+    }
+
+    30% {
+        clip-path: inset(30% 0 50% 0);
+        transform: translate(-2px, 1px);
+    }
+
+    40% {
+        clip-path: inset(80% 0 5% 0);
+        transform: translate(3px, -1px);
+    }
+
+    50% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(0);
+    }
+}
+
+@keyframes glitch-shift-2 {
+
+    0%,
+    100% {
+        clip-path: inset(0 0 100% 0);
+        transform: translate(0);
+    }
+
+    15% {
+        clip-path: inset(20% 0 60% 0);
+        transform: translate(5px, -3px);
+        color: var(--coral);
+    }
+
+    35% {
+        clip-path: inset(70% 0 15% 0);
+        transform: translate(-5px, 2px);
+        color: var(--violet);
+    }
+
+    55% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(0);
+    }
+}
+
+@keyframes h1-in {
+    from {
+        opacity: 0;
+        transform: skewX(-6deg) translateY(30px) scaleY(1.1);
+        filter: blur(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: skewX(0deg) translateY(0) scaleY(1);
+        filter: blur(0);
+    }
+}
+
+/* Card entrance */
+@keyframes card-slam {
+    0% {
+        opacity: 0;
+        transform: translateY(60px) rotate(-1deg) scale(0.94);
+    }
+
+    60% {
+        transform: translateY(-6px) rotate(0.3deg) scale(1.01);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+/* Ambient orb pulse */
+@keyframes orb-pulse {
+
+    0%,
+    100% {
+        transform: scale(1) translate(0, 0);
+        opacity: 0.6;
+    }
+
+    33% {
+        transform: scale(1.1) translate(2%, -1.5%);
+        opacity: 0.9;
+    }
+
+    66% {
+        transform: scale(0.9) translate(-1%, 2%);
+        opacity: 0.5;
+    }
+}
+
+/* Border electricity */
+@keyframes border-zap {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Typing cursor blink */
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Noise grain */
+@keyframes grain {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(-2%, -3%);
+    }
+
+    30% {
+        transform: translate(3%, -1%);
+    }
+
+    50% {
+        transform: translate(-1%, 4%);
+    }
+
+    70% {
+        transform: translate(4%, 2%);
+    }
+
+    90% {
+        transform: translate(-3%, 1%);
+    }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   .projects
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.projects {
+    min-height: 100vh;
+    padding: 110px 90px 150px;
+    background: var(--void);
+    color: var(--text);
+    font-family: var(--font-body);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    animation: flicker 8s step-end infinite;
+}
+
+/* Film grain overlay */
+.projects::before {
+    content: '';
+    position: fixed;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+    opacity: 0.032;
+    pointer-events: none;
+    z-index: 0;
+    animation: grain 0.4s steps(1) infinite;
+}
+
+/* Scanline sweep */
+.projects::after {
+    content: '';
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom,
+            transparent,
+            rgba(155, 92, 255, 0.03),
+            rgba(255, 61, 90, 0.04),
+            transparent);
+    pointer-events: none;
+    z-index: 1;
+    animation: scanline 6s linear infinite;
+}
+
+/* Background ambient orbs */
+.projects>* {
+    position: relative;
+    z-index: 2;
+}
+
+/* Coral orb */
+.projects [data-orb-coral],
+.projects::before {
+    /* handled separately below via wrapper hack */
+}
+
+/* We inject orbs via box-shadow on a pseudo of project-grid */
+
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   AMBIENT ORB LAYER  (sits behind grid, above noise)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.project-grid::before {
+    content: '';
+    position: fixed;
+    top: -30vh;
+    left: -20vw;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, rgba(155, 92, 255, 0.14) 0%, transparent 65%);
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: -1;
+    animation: orb-pulse 12s ease-in-out infinite;
+}
+
+.project-grid::after {
+    content: '';
+    position: fixed;
+    bottom: -20vh;
+    right: -10vw;
+    width: 55vw;
+    height: 55vw;
+    background: radial-gradient(circle, rgba(255, 61, 90, 0.13) 0%, transparent 65%);
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: -1;
+    animation: orb-pulse 16s ease-in-out infinite reverse;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   .projects h1
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.projects h1 {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 11vw, 10rem);
+    line-height: 0.9;
+    letter-spacing: 0.04em;
+    text-align: center;
+    margin-bottom: 80px;
+    text-transform: uppercase;
+    position: relative;
+
+    /* Neon gradient fill */
+    background: linear-gradient(110deg,
+            var(--coral) 0%,
+            #ff7eb3 28%,
+            var(--violet) 55%,
+            #c084fc 75%,
+            var(--acid) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    animation: h1-in 0.9s var(--ease-out) both;
+
+    /* Text shadow glow underneath */
+    filter: drop-shadow(0 0 30px rgba(155, 92, 255, 0.4)) drop-shadow(0 0 60px rgba(255, 61, 90, 0.2));
+}
+
+/* Glitch layer 1 — coral offset */
+.projects h1::before {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, var(--coral), var(--coral));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: glitch-shift 5s 2s steps(1) infinite;
+    pointer-events: none;
+}
+
+/* Glitch layer 2 — violet offset */
+.projects h1::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, var(--violet), var(--violet));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: glitch-shift-2 5s 2.1s steps(1) infinite;
+    pointer-events: none;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   .project-grid
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+    position: relative;
+    z-index: 2;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CARDS — direct children of .project-grid
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.project-grid>* {
+    background: var(--surface);
+    border: 1px solid var(--ghost-border);
+    border-radius: 6px;
+    padding: 34px 30px 30px;
+    position: relative;
+    overflow: hidden;
+    cursor: crosshair;
+
+    animation: card-slam 0.65s var(--ease-bounce) both;
+    transition:
+        transform 0.4s var(--ease-out),
+        box-shadow 0.4s var(--ease-out),
+        border-color 0.4s var(--ease-out),
+        background 0.4s var(--ease-out);
+}
+
+/* Stagger entrance */
+.project-grid>*:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.project-grid>*:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.project-grid>*:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.project-grid>*:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.project-grid>*:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.project-grid>*:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+/* Animated neon border via gradient background trick */
+.project-grid>*::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 6px;
+    padding: 1px;
+    background: linear-gradient(135deg,
+            var(--coral),
+            var(--violet),
+            var(--coral),
+            var(--acid));
+    background-size: 300% 300%;
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    animation: border-zap 3s ease infinite;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+/* Corner bracket decoration — top left */
+.project-grid>*::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    border-top: 1.5px solid var(--coral);
+    border-left: 1.5px solid var(--coral);
+    border-radius: 6px 0 0 0;
+    opacity: 0.5;
+    transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+/* ── Hover ─────────────────────────────────────────────── */
+.project-grid>*:hover {
+    transform: translateY(-8px) scale(1.02) rotate(-0.4deg);
+    background: #110f1c;
+    border-color: transparent;
+    box-shadow:
+        0 0 0 1px rgba(155, 92, 255, 0.2),
+        0 0 30px rgba(155, 92, 255, 0.2),
+        0 0 60px rgba(255, 61, 90, 0.12),
+        0 24px 48px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.project-grid>*:hover::before {
+    opacity: 1;
+}
+
+.project-grid>*:hover::after {
+    width: 30px;
+    height: 30px;
+    opacity: 1;
+}
+
+/* Alternate cards: violet primary, coral secondary on hover */
+.project-grid>*:nth-child(3n+2):hover {
+    box-shadow:
+        0 0 0 1px rgba(255, 61, 90, 0.25),
+        0 0 30px rgba(255, 61, 90, 0.2),
+        0 0 60px rgba(155, 92, 255, 0.1),
+        0 24px 48px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.project-grid>*:nth-child(3n+2)::after {
+    border-top-color: var(--violet);
+    border-left-color: var(--violet);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RESPONSIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media (max-width: 1024px) {
+    .projects {
+        padding: 90px 60px 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    .projects {
+        padding: 70px 22px 100px;
+    }
+
+    .projects h1 {
+        margin-bottom: 52px;
+    }
+
+    .project-grid {
+        gap: 16px;
+    }
+}
